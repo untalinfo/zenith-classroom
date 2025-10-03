@@ -83,7 +83,15 @@ const ClassroomScreen: React.FC = () => {
         if (courseId && currentContent) {
             updateProgress(courseId, currentContent.id);
         }
-    }, [courseId, currentContent, updateProgress]);
+        
+        // Check if this is the last content in the course
+        if (activeIndex === flattenedContent.length - 1) {
+            // This is the last content, redirect to home after a short delay
+            setTimeout(() => {
+                navigate('/', { state: { courseCompleted: true } });
+            }, 2000);
+        }
+    }, [courseId, currentContent, updateProgress, activeIndex, flattenedContent.length, navigate]);
 
     const isBookmarked = currentContent ? bookmarks.some(b => b.contentId === currentContent.id) : false;
     const isNavigationDisabled = currentContent?.type === 'quiz' && !isQuizComplete;

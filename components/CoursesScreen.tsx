@@ -41,6 +41,16 @@ const CoursesScreen: React.FC = () => {
             }, 4000);
 
             return () => clearTimeout(timer);
+        } else if (location.state?.courseCompleted) {
+            setToastMessage('🎉 Congratulations! You completed the course!');
+            
+            navigate(location.pathname, { replace: true });
+
+            const timer = setTimeout(() => {
+                setToastMessage('');
+            }, 5000);
+
+            return () => clearTimeout(timer);
         }
     }, [location, navigate]);
 
